@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多條件查詢</title>
+</head>
+<body>
+    <br>
+    <form method="post" action="fetch02.php" target="iframe1">
+        請輸入要查詢的 ＩＤ：<input type="text" name="id" placeholder="請輸入ID"><br><br>
+        請輸入要查詢的 年度：<input type="text" name="年度" placeholder="請輸入年度"><br><br>
+        請輸入要查詢的 月份：<input type="text" name="月份" placeholder="請輸入月份"><br><br>
+        <h4 style = color:#f00 >如要查詢全部請直接按送出 ---> <input type="submit" value="送出"></h4>
+    </form>
+
+    <p><a href="insert.html" target="iframe1">日線</a><p>
+    <p><a href="fetch02.php" target="iframe1">月線</a><p></p>
+    <iframe name="iframe1" src="fetch02.php" width=700 height=550></iframe>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>	
+ 
+    
+</body>
+</html>
