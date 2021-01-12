@@ -218,9 +218,10 @@
 
 .stock-2-2 {
   margin-top: 5px;
-  margin-left: 0px;
   margin-bottom: 20px;
+  padding-top: 5px;
   border: 1px solid #dddddd;
+  border-radius: 0.25rem;
 }
 .stock-3 {
   position: relative;
