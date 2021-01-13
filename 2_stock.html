@@ -100,14 +100,14 @@
                     <div class="container-fluid">
                         <h1 class="stock-1-1">個股資訊</h1>
 
-                        <!-- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="post" action="http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code=3515'&from=1610419642087&to=1610441242088&panelId=2" target="iframe1"> -->
+                        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" method="post" action="http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code='${NewStringValue}'&from=1610419642087&to=1610441242088&panelId=2" target="iframe1">
                             <div class="input-group">
-                                <input class="form-control" id="code" type="text"  placeholder="請輸入股票代號或名稱" aria-label="Search" aria-describedby="basic-addon2" />
+                                <input class="form-control" id="StringTextBox" type="text"  placeholder="請輸入股票代號或名稱" aria-label="Search" aria-describedby="basic-addon2" />
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit" onclick="add()"><i class="fas fa-search"></i></button>
+                                    <button class="btn btn-primary" type="submit" onclick="ChangeString()"><i class="fas fa-search"></i></button>
                                 </div>
                             </div>
-                        <!-- </form> -->
+                        </form>
 
                         <ol class="breadcrumb-1">
                             <li class="breadcrumb-item-1"><a href="2_stock.html">即時資訊</a></li>
@@ -118,7 +118,7 @@
                         
                         <div class="stock-2-1">
                             <div class="stock-2-2">
-                                <iframe name=iframe1 src="http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code= '${a}' &from=1610419642087&to=1610441242088&panelId=2" width="100%" height="105" frameborder="0"></iframe>
+                                <iframe name=iframe1 id="NewStringBox" src="http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code= 3528 &from=1610419642087&to=1610441242088&panelId=2" width="100%" height="105" frameborder="0"></iframe>
                             </div>
                         </div>
 
@@ -126,6 +126,12 @@
                             <div class="stock-2-2">
                                 <!-- <iframe name="iframe1" src="API-01/fetch01.php" width=100% height=350 frameborder=0 scrolling=no></iframe> -->
                                 <iframe name=iframe1 src="http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code= 3528 &from=1610419987009&to=1610441587009&panelId=4" width="100%" height="105" frameborder="0"></iframe>
+                            </div>
+                        </div>
+
+                        <div class="stock-2-1">
+                            <div class="stock-2-2">
+                                <iframe src="http://localhost:5555/" width="100%" height="400" frameborder="0"></iframe>
                             </div>
                         </div>
 
@@ -183,6 +189,12 @@
                         </div>
                     </div>
                 </main>
+
+       
+        <b id='boldStuff'>dude</b> 
+        <input type='button' onclick='changeText()' value='Change Text'/>
+
+
 <!-- ============================================================================================================ -->
 
                 <footer class="py-4 bg-light mt-auto">
@@ -202,11 +214,25 @@
             </div>
         </div>
 
+
+
+
         <script>
-            function add() {
-                var a = parseInt(document.getElementById('code').value);
+            function changeText(){
+                document.getElementById('boldStuff').innerHTML = 'Fred Flinstone';
+                }
+        </script>
+
+        
+
+
+        <script>
+            function ChangeString(){
+                var NewStringValue=document.getElementById("StringTextBox").value;
+                document.getElementById("NewStringBox").innerHTML=NewStringValue;
             }
         </script>
+
 
 
 
