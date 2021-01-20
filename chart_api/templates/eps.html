@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eps</title>
+         
+            
+</head>
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.0.0/echarts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <h1>基本每股盈餘</h1>
+    <div class = "chart-container">
+        <canvas id="myChart1" width='1000' height='500' style="display:block; height:250px ;width:500px;"></canvas>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" 
+                integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" 
+                crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        
+        <script>
+            // const cors = 'https://cors-anywhere.herokuapp.com/';
+            // const url = 'http://localhost:8000/1';
+            $.getJSON("http://localhost:8000/geteps/{{code_template}}",function(json){
+                console.log(json);
+
+                var label = json.map(function(item){
+                    return item.label;
+                });
+
+
+                var labels = json.map(function(item){
+                    return item.labels;
+                });
+                
+                var value = json.map(function(item){
+                    return item.value;
+                });
+                
+                var data = {
+                    labels: labels,
+                    datasets: [{
+                        label: "基本每股盈餘",	
+                        data:value,
+                        backgroundColor: "#ff8",
+                        borderWidth: 1,
+                        borderColor: "#00f",
+                        // hoverBorderColor:"#f00"
+                        lineTension: 0.5,
+                        fill:false
+                    }]
+                };
+                var options = {
+                    scales: {
+                        yAxes: [{
+                        // y軸的Label    
+                           scaleLabel:{  
+                                display:true,
+                                labelString:'元'
+                            },
+                            ticks: {
+                                // beginAtZero: true,
+                                stepSize:2
+                                // max: 100,
+                                // min: -10,
+                            }
+                        }],
+                        xAxes: [{
+                            barPercentage: 0.5,
+                        }]
+                    }
+                };
+
+                var ctx = document.getElementById('myChart1').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type:"bar",
+                    data:data,
+                    options: options
+                });
+            
+            })
+
+
+        </script>
+    </div>
+
+
+
+
+
+
+    
+</body>
+</html>
