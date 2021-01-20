@@ -12,7 +12,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
 
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/echarts.min.js"></script>
-        <!-- <script type="text/javascript" src="js/echarts.js"></script> -->
        
         
     </head>
@@ -123,7 +122,7 @@
 
                         <div class="stock-2-1">
                             <div class="stock-2-2">
-                                <iframe id="myframe1" src="http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code=3528&from=1611022894170&to=1611044494170&panelId=5" width="100%" height="105" frameborder="0"></iframe>
+                                <iframe id="myframe1" src="http://192.168.56.102:3000/d-solo/gWk9w1fGk/gu-piao-ce-shi-copy?var-code= 3528 &from=1611103406761&to=1611125006761&orgId=1&panelId=5" width="100%" height="105" frameborder="0"></iframe>
                             </div>
                         </div>
 
@@ -135,14 +134,12 @@
                        
                         <div class="stock-2-1">
                             <div class="stock-2-2">
-                                <iframe src="http://localhost:5555/" width="100%" height="450" frameborder="0"></iframe>
+                                <iframe id="myframe3" src="http://localhost:8000/3528" width="100%" height="450" frameborder="0"></iframe>
                             </div>
                         </div>
 
                         
-
-                       <!-- TradingView Widget BEGIN -->
-                       
+                       <!-- TradingView Widget BEGIN -->  
                        <div class="tradingview-widget-container">
                             <div id="tradingview_8e34e"></div>
                             <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL 圖表</span></a>由TradingView提供</div>
@@ -172,43 +169,33 @@
                         }
                             );
                             </script>
-                        </div>
-                        
+                        </div>   
                         <!-- TradingView Widget END -->
-                        
-                        
+                                                
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="stock-3">  
-                                    <div id="main" style="width:570px; height:320px;"></div>
+                                    <iframe id="myframe4" src="http://localhost:8000/debtratio/3528" width="100%" height="350" frameborder="0"></iframe>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="stock-3">
-                                    <div id="main1" style="width:570px; height:320px;"></div>
+                                    <iframe id="myframe5" src="http://localhost:8000/eps/3528" width="100%" height="350" frameborder="0"></iframe>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar mr-1"></i>
-                                        股價
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="50"></canvas></div>
+                                <div class="stock-3">  
+                                    <iframe id="myframe6" src="http://localhost:8000/revenue/3528" width="100%" height="350" frameborder="0"></iframe>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-pie mr-1"></i>
-                                        營收
-                                    </div>
-                                    <div class="card-body"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
+                                <div class="stock-3">
+                                    <iframe id="myframe5" src="http://localhost:8000/eps/3528" width="100%" height="350" frameborder="0"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -240,10 +227,18 @@
                 var inputVal = document.getElementById("StringTextBox").value;
                 var src0 = "http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code="+inputVal+"&from=1610419642087&to=1610441242088&panelId=2";
                 document.getElementById('myframe0').src = src0;
-                var src1 = "http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code="+inputVal+"&from=1611022894170&to=1611044494170&panelId=5";
+                var src1 = "http://192.168.56.102:3000/d-solo/gWk9w1fGk/gu-piao-ce-shi-copy?var-code="+inputVal+"&from=1611103406761&to=1611125006761&orgId=1&panelId=5";
                 document.getElementById('myframe1').src = src1;
                 var src2 = "http://192.168.56.102:3000/d-solo/eGYuwl-Gz/tast?orgId=1&var-code="+inputVal+"&from=1610419987009&to=1610441587009&panelId=4";
-                document.getElementById('myframe2').src = src2;   
+                document.getElementById('myframe2').src = src2;  
+                var src3 = "http://localhost:8000/"+inputVal;
+                document.getElementById('myframe3').src = src3; 
+                var src4 = "http://localhost:8000/debtratio/"+inputVal;
+                document.getElementById('myframe4').src = src4; 
+                var src5 = "http://localhost:8000/eps/"+inputVal;
+                document.getElementById('myframe5').src = src5; 
+                var src6 = "http://localhost:8000/revenue/"+inputVal;
+                document.getElementById('myframe6').src = src6; 
             };
         </script>
 
@@ -262,7 +257,6 @@
         <script src="stock_img/stock_img01.html"></script>
 
         <script src="js/echarts.js"></script>
-        <!-- <script src="stock_img/fetch0.html"></script> -->
         
     </body>
 </html>

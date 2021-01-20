@@ -28,7 +28,7 @@
         
 
         // 数据意义：开盘(open)，收盘(close)，最低(lowest)，最高(highest)
-        $.getJSON("http://localhost:5555/all", function(data1){
+        $.getJSON("http://localhost:8000/all/{{code_template}}", function(data1){
         console.log(data1);
         var date = data1.map(function(item){
         return item.date;
@@ -92,7 +92,7 @@
 
         option = {
             title: {
-                text: '3515',
+                text: '{{code_template}}',
                 left: 0
             },
             tooltip: {
