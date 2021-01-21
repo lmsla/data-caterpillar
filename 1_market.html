@@ -98,9 +98,14 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">大盤指數</h1>
                         
+                        <div class="stock-1-2">
+                            <!-- <div class="stock-2-2"> -->
+                                <iframe src="http://192.168.56.102:3000/d-solo/gWk9w1fGk/gu-piao-ce-shi-copy?orgId=1&var-code=3528&from=1611187092053&to=1611208692053&panelId=11" width="168" height="70" frameborder="0"></iframe>
+                            <!-- </div> -->
+                        </div>
                         <hr>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">Primary Card</div>
@@ -137,40 +142,46 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        
-                        <!-- <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area mr-1"></i>
-                                基本資料
-                            </div>
-                            <div class="card-body">
-                                <iframe name="iframe1" src="https://pchome.megatime.com.tw/tse/" width=100% height=450 frameborder=0 ></iframe>
-                            </div>
                         </div> -->
 
-                       
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area mr-1"></i>
-                                指數走勢圖
-                            </div>
-                            
-                                <div id="main1" style="widows: 100%; height:420px;"></div>
-                            
-                            <!-- <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div> -->
+                         <!-- TradingView Widget BEGIN -->  
+                        <div class="tradingview-widget-container">
+                        <div id="tradingview_8e34e"></div>
+                        <!-- <div class="tradingview-widget-copyright"><a href="https://tw.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL 圖表</span></a>由TradingView提供</div> -->
+                        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                        <script type="text/javascript">
+                        new TradingView.widget(
+                        {
+                        "width": 1150,
+                        "height": 610,
+                        "symbol": "NASDAQ:AAPL",
+                        "interval": "D",
+                        "timezone": "Asia/Taipei",
+                        "theme": "light",
+                        "style": "1",
+                        "locale": "zh_TW",
+                        "toolbar_bg": "#f1f3f6",
+                        "enable_publishing": false,
+                        "allow_symbol_change": true,
+                        "studies": [
+                        "studyADR@tv-basicstudies",
+                        "MACD@tv-basicstudies",
+                        "BB@tv-basicstudies",
+                        "Volume@tv-basicstudies",
+                        "MASimple@tv-basicstudies"
+                        ],
+                        "container_id": "tradingview_8e34e"
+                        });
+                        </script>
                         </div>
 
-                       
+                        <br><br>   
+                    <!-- TradingView Widget END -->
 
-                        <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-chart-area mr-1"></i>
-                                當日個股行情
-                            </div>
-                            <div class="card-body">
-                                <iframe name="iframe1" src="API-01/fetch.php" width=100% height=350 frameborder=0 ></iframe>
+                    
+                        <div class="stock-2-1">
+                            <div class="stock-2-2">
+                                <iframe src="http://192.168.56.102:3000/d-solo/gWk9w1fGk/gu-piao-ce-shi-copy?orgId=1&var-code=3528&from=1611179177579&to=1611200777579&panelId=9" width="100%" height="400" frameborder="0"></iframe>
                             </div>
                         </div>
 

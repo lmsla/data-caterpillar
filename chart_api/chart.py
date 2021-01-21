@@ -13,8 +13,12 @@ app.config["DEBUG"]=True
 api =Api(app)
 
 
-@app.route("/debtratio/<code>", methods=["get"])
+@app.route("/<code>", methods=["get"])
 def home(code):
+    return render_template('index.html',code_template = code)
+
+@app.route("/debtratio/<code>", methods=["get"])
+def home1(code):
     return render_template('debt_ratio.html',code_template = code)
 
 @app.route("/eps/<code>", methods=["get"])
@@ -25,11 +29,25 @@ def eps(code):
 def revenue(code):
     return render_template('revenue.html',code_template = code)
 
-@app.route("/<code>", methods=["get"])
-def home1(code):
-    return render_template('index.html',code_template = code)
 
 # ========================== GET DATA ====================================
+
+def db_init():
+    db = pymysql.connect('192.168.56.102','eason','671106','stock_database')
+    cursor = db.cursor(pymysql.cursors.DictCursor)
+    return db,cursor
+
+@app.route("/all/<code>", methods=["get"])
+def all(code) :
+    db, cursor = db_init()
+    sql = """
+        SELECT DATE_FORMAT(date,'%Y-%m-%d') date,open_price,close_price,low_price,high_price,FORMAT(stock_count,'no')
+        FROM stock_database.stock_date  where code = '{}';
+        """.format(code)
+    cursor.execute(sql)
+    count_data = cursor.fetchall()
+    db.close()
+    return jsonify(count_data)
 
 @app.route('/getdebtratio/<code>', methods=["GET"])
 def debt_ratio(code):
@@ -42,11 +60,6 @@ def debt_ratio(code):
     one = cursor.fetchall()
     db.close()
     return jsonify(one)
-
-def db_init():
-    db = pymysql.connect('192.168.56.102','eason','671106','stock_database')
-    cursor = db.cursor(pymysql.cursors.DictCursor)
-    return db,cursor
   
 @app.route('/geteps/<code>', methods=["GET"])
 def geteps(code):
@@ -68,25 +81,10 @@ def getrevenue(code):
 		IF (t1.季度=1, t1.營業收入,t1.營業收入-1- t2.營業收入) as value
     FROM stock_database.incomestatement913 t1 left JOIN stock_database.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度;
         """.format(code)
-
     cursor.execute(sql)
     one = cursor.fetchall()
     db.close()
     return jsonify(one)
-
-
-@app.route("/all/<code>", methods=["get"])
-def all(code) :
-    db, cursor = db_init()
-    sql = """
-        SELECT DATE_FORMAT(date,'%Y-%m-%d') date,open_price,close_price,low_price,high_price,FORMAT(stock_count,'no')
-        FROM stock_database.stock_date  where code = '{}';
-        """.format(code)
-
-    cursor.execute(sql)
-    count_data = cursor.fetchall()
-    db.close()
-    return jsonify(count_data)
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0',port=8000)
