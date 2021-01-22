@@ -29,11 +29,15 @@ def eps(code):
 def revenue(code):
     return render_template('revenue.html',code_template = code)
 
+@app.route('/netincome/<code>', methods=["get"])
+def netincome(code):
+    return render_template('netincome.html',code_template = code)
+
 
 # ========================== GET DATA ====================================
 
 def db_init():
-    db = pymysql.connect('192.168.56.102','eason','671106','stock_database')
+    db = pymysql.connect('192.168.56.104','russell','pn12345','STOCK')
     cursor = db.cursor(pymysql.cursors.DictCursor)
     return db,cursor
 
@@ -53,7 +57,7 @@ def all(code) :
 def debt_ratio(code):
     db, cursor = db_init()
 # json無法解析decimal格式，必須先將有小數的值轉為double
-    sql = """  Select concat(年度,'-',季度) as labels, convert(( 負債總計/資產總計)*100,double(10,2)) as value From stock_database.balancesheet915
+    sql = """  Select concat(年度,'-',季度) as labels, convert(( 負債總計/資產總計)*100,double(10,2)) as value From STOCK.balancesheet915
                     where code = '{}'
             """.format(code)
     cursor.execute(sql)
@@ -65,7 +69,7 @@ def debt_ratio(code):
 def geteps(code):
     db, cursor = db_init()
 # json無法解析decimal格式，必須先將有小數的值轉為double
-    sql = """   SELECT 年度 as labels , 基本每股盈餘 as value FROM stock_database.incomestatement913 where code = '{}' and 季度 = 4 
+    sql = """   SELECT 年度 as labels , 基本每股盈餘 as value FROM STOCK.incomestatement913 where code = '{}' and 季度 = 4 
     or code = '{}' and 年度 = 109 and 季度= 3 order by 年度
             """.format(code,code)
     cursor.execute(sql)
@@ -79,7 +83,21 @@ def getrevenue(code):
     sql = """
     SELECT concat(t1.年度,'-',t1.季度) as labels,  	
 		IF (t1.季度=1, t1.營業收入,t1.營業收入-1- t2.營業收入) as value
-    FROM stock_database.incomestatement913 t1 left JOIN stock_database.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度;
+    FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度;
+        """.format(code)
+    cursor.execute(sql)
+    one = cursor.fetchall()
+    db.close()
+    return jsonify(one)
+
+
+@app.route('/getnetincome/<code>',methods=["GET"])
+def getnetincome(code):
+    db, cursor = db_init()
+    sql = """
+    SELECT concat(t1.年度,'-',t1.季度) as labels,  	
+		IF (t1.季度=1, t1.本期淨利,t1.本期淨利-1- t2.本期淨利) as value
+    FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度;
         """.format(code)
     cursor.execute(sql)
     one = cursor.fetchall()
