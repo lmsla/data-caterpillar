@@ -27,12 +27,15 @@ def eps(code):
 
 @app.route('/revenue/<code>', methods=["get"])
 def revenue(code):
-    return render_template('revenue.html',code_template = code)
+    return render_template('revenueE.html',code_template = code)
 
 @app.route('/netincome/<code>', methods=["get"])
 def netincome(code):
-    return render_template('netincome.html',code_template = code)
+    return render_template('netincomeE.html',code_template = code)
 
+# @app.route('/revenue1/<code>', methods=["get"])
+# def revenuet(code):
+#     return render_template('revenueE.html',code_template = code)
 
 # ========================== GET DATA ====================================
 
@@ -95,10 +98,27 @@ def getrevenue(code):
 def getnetincome(code):
     db, cursor = db_init()
     sql = """
-    SELECT concat(t1.年度,'-',t1.季度) as labels,  	
-		IF (t1.季度=1, t1.本期淨利,t1.本期淨利-1- t2.本期淨利) as value
-    FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度;
+    SELECT concat(年度,'-',季度) as season,netincome , convert((netincome/prenetincome -1)*100,double(10,2)) as grown
+	from(SELECT 年度,季度,id,netincome, LAG(netincome, 1)  OVER ( ORDER BY id)  prenetincome
+					FROM ( SELECT  t1.年度,t1.季度, t1.code ,t1.id,t1.本期淨利 ,
+										IF (t1.季度=1, t1.本期淨利,t1.本期淨利- t2.本期淨利) as netincome
+									FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度) AS  sub) as sub1
         """.format(code)
+    cursor.execute(sql)
+    one = cursor.fetchall()
+    db.close()
+    return jsonify(one)
+
+@app.route('/getrevenue1/<code>',methods=["GET"])
+def getrevenue1(code):
+    db, cursor = db_init()
+    sql = """
+    SELECT concat(年度,'-',季度) as season,re , convert((re/pre -1)*100,double(10,2)) as grown
+	FROM(SELECT 年度,季度,id,re, LAG(re, 1)  OVER ( ORDER BY id)  pre
+					FROM ( SELECT  t1.年度,t1.季度, t1.code ,t1.id,t1.營業收入 ,
+										IF (t1.季度=1, t1.營業收入,t1.營業收入- t2.營業收入) as re
+									FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度) AS  sub) as sub1""".format(code)                         
+    
     cursor.execute(sql)
     one = cursor.fetchall()
     db.close()
