@@ -19,11 +19,11 @@ def home(code):
 
 @app.route("/debtratio/<code>", methods=["get"])
 def home1(code):
-    return render_template('debt_ratio.html',code_template = code)
+    return render_template('debt_ratioE.html',code_template = code)
 
 @app.route("/eps/<code>", methods=["get"])
 def eps(code):
-    return render_template('eps.html',code_template = code)
+    return render_template('epsE.html',code_template = code)
 
 @app.route('/revenue/<code>', methods=["get"])
 def revenue(code):
