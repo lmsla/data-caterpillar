@@ -40,7 +40,7 @@ def netincome(code):
 # ========================== GET DATA ====================================
 
 def db_init():
-    db = pymysql.connect('192.168.56.104','russell','pn12345','STOCK')
+    db = pymysql.connect('192.168.56.102','eason','671106','stock_database')
     cursor = db.cursor(pymysql.cursors.DictCursor)
     return db,cursor
 
@@ -60,7 +60,7 @@ def all(code) :
 def debt_ratio(code):
     db, cursor = db_init()
 # json無法解析decimal格式，必須先將有小數的值轉為double
-    sql = """  Select concat(年度,'-',季度) as labels, convert(( 負債總計/資產總計)*100,double(10,2)) as value From STOCK.balancesheet915
+    sql = """  Select concat(年度,'-',季度) as labels, convert(( 負債總計/資產總計)*100,double(10,2)) as value From stock_database.balancesheet915
                     where code = '{}'
             """.format(code)
     cursor.execute(sql)
@@ -72,7 +72,7 @@ def debt_ratio(code):
 def geteps(code):
     db, cursor = db_init()
 # json無法解析decimal格式，必須先將有小數的值轉為double
-    sql = """   SELECT 年度 as labels , 基本每股盈餘 as value FROM STOCK.incomestatement913 where code = '{}' and 季度 = 4 
+    sql = """   SELECT 年度 as labels , 基本每股盈餘 as value FROM stock_database.incomestatement913 where code = '{}' and 季度 = 4 
     or code = '{}' and 年度 = 109 and 季度= 3 order by 年度
             """.format(code,code)
     cursor.execute(sql)
@@ -86,7 +86,7 @@ def getrevenue(code):
     sql = """
     SELECT concat(t1.年度,'-',t1.季度) as labels,  	
 		IF (t1.季度=1, t1.營業收入,t1.營業收入-1- t2.營業收入) as value
-    FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度;
+    FROM stock_database.incomestatement913 t1 left JOIN stock_database.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度;
         """.format(code)
     cursor.execute(sql)
     one = cursor.fetchall()
@@ -102,7 +102,7 @@ def getnetincome(code):
 	from(SELECT 年度,季度,id,netincome, LAG(netincome, 1)  OVER ( ORDER BY id)  prenetincome
 					FROM ( SELECT  t1.年度,t1.季度, t1.code ,t1.id,t1.本期淨利 ,
 										IF (t1.季度=1, t1.本期淨利,t1.本期淨利- t2.本期淨利) as netincome
-									FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度) AS  sub) as sub1
+									FROM stock_database.incomestatement913 t1 left JOIN stock_database.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度) AS  sub) as sub1
         """.format(code)
     cursor.execute(sql)
     one = cursor.fetchall()
@@ -117,7 +117,7 @@ def getrevenue1(code):
 	FROM(SELECT 年度,季度,id,re, LAG(re, 1)  OVER ( ORDER BY id)  pre
 					FROM ( SELECT  t1.年度,t1.季度, t1.code ,t1.id,t1.營業收入 ,
 										IF (t1.季度=1, t1.營業收入,t1.營業收入- t2.營業收入) as re
-									FROM STOCK.incomestatement913 t1 left JOIN STOCK.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度) AS  sub) as sub1""".format(code)                         
+									FROM stock_database.incomestatement913 t1 left JOIN stock_database.incomestatement913 t2 ON t1.id = t2.id+1  where t1.code='{}' order by t1.年度,t1.季度) AS  sub) as sub1""".format(code)                         
     
     cursor.execute(sql)
     one = cursor.fetchall()
